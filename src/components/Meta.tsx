@@ -1,8 +1,8 @@
 import React from 'react'
 import Head from 'next/head'
-import MetaProps  from 'types/Meta'
+import MetaProps  from '@/types/interfaces/Meta'
 
-const Meta = ( { detail, path } : MetaProps): JSX.Element => {
+const Meta = ({ detail, path }: MetaProps): JSX.Element => {
   const { title, description, url } = detail
   const { icon, favicon, thumbnail } = path
   return (

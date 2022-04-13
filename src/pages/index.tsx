@@ -1,9 +1,16 @@
+import { Grid } from '@mui/material'
+import DrawCanvas from '@/containers/DrawCanvas'
+import DrawerStyle from '@/styles/Drawcanvas'
+
 const IndexPage = () => (
   <>
-    <h1>バーチャル九工大キャンパス</h1>
-    <p>
-      九工大飯塚キャンパスの3Dマップです
-    </p>
+    <Grid container>
+      <Grid item xs={12}>
+        <DrawerStyle>
+          <DrawCanvas />
+        </DrawerStyle>
+      </Grid>
+    </Grid>
   </>
 )
 
