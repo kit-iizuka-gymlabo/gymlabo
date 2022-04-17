@@ -5,10 +5,10 @@ import Layout from '@/containers/Layout'
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* <Layout> */}
+      <Layout>
         <CssBaseline />
         <Component {...pageProps} />
-      {/* </Layout> */}
+      </Layout>
     </>
   )
 }
