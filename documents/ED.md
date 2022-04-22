@@ -13,7 +13,7 @@
 - React.js
 - Typescript
 - Next.js
-- Redux
+- Zustand(Fluxベースの軽量状態管理ライブラリ)
 - Firebase
   - Cloud Firestore
   - Cloud Storage for Firebase

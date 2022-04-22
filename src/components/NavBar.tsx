@@ -20,19 +20,19 @@ import NavBarProps from '@/types/interfaces/NavBar'
 const NavBar = ({ ...props }: NavBarProps) => (
   <>
     <AppBar position="absolute">
-    <Toolbar>
-      <IconButton
-        color="inherit"
-        onClick={props.drawerHandler}
-      >
-        <MenuIcon />
-      </IconButton>
-    </Toolbar>
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          onClick={props.openDrawer}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>
     </AppBar>
     <Drawer
       variant="temporary"
       open={props.drawerState}
-      onClose={props.drawerHandler}
+      onClose={props.closeDrawer}
     >
       <DrawerHeader>
         <Typography variant="h6">
@@ -40,7 +40,7 @@ const NavBar = ({ ...props }: NavBarProps) => (
         </Typography>
         <IconButton
           color="inherit"
-          onClick={props.drawerHandler}
+          onClick={props.closeDrawer}
         >
           <CloseIcon />
         </IconButton>
