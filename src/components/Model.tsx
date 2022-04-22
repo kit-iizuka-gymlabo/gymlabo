@@ -1,13 +1,14 @@
-import { useRef } from 'react'
-import { useGLTF, useFBX } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import ModelProps from '@/types/interfaces/Model'
+import useModalStore from '@/hooks/useModalStore'
 
-const Model = ({ model_path, modalHandler }: ModelProps) => {
-  const ref = useRef()
+const Model = ({ model_path }: ModelProps) => {
+  const store = useModalStore()
   const gltf = useGLTF(model_path)
+  
   return (
     <group>
-      <mesh ref={ref} onClick={modalHandler}>
+      <mesh onClick={store.openModal}>
         <primitive 
           object={gltf.scene}
           position={[0,0,0]}

@@ -2,14 +2,12 @@ import { AppProps } from 'next/app'
 import { CssBaseline } from '@mui/material'
 import Layout from '@/containers/Layout'
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
-      <Layout>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </Layout>
-    </>
+    <Layout>
+      <CssBaseline />
+      <Component {...pageProps} />    
+    </Layout>
   )
 }
 

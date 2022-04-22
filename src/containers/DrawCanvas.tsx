@@ -1,28 +1,13 @@
-import { useState, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Preload, Stage } from '@react-three/drei'
-import { Modal, CircularProgress } from '@mui/material'
-import ModelCard from '@/components/ModelCard'
 import path from '@/static/configs/model.json'
 
-const Model = dynamic(() => import('@/components/Model'))
+const Model = dynamic(() => import('@/components/Model'), { ssr: false})
 
 const DrawCanvas = () => {
-  const [modalState, setModalOpen] = useState(false)
-
-  const handleModalToggle = () => {
-    setModalOpen(!modalState)
-  }
-
   return (
     <>
-      <Modal
-        open={modalState}
-        onClose={handleModalToggle}
-      >
-        <ModelCard />
-      </Modal>
       <Canvas camera={{ position: [0,20,0] }}>
         <Sky />
         <OrbitControls
@@ -32,7 +17,7 @@ const DrawCanvas = () => {
           minPolarAngle={Math.PI/3}
           maxPolarAngle={Math.PI/2}
         />
-        <ambientLight intensity={10}/>
+        <ambientLight intensity={0.5}/>
         <directionalLight
           position={[10,20,0]}
           intensity={1}
@@ -44,7 +29,6 @@ const DrawCanvas = () => {
         <Stage>
           <Model 
             model_path={path.model_path}
-            modalHandler={handleModalToggle}
           />
         </Stage>
         <Preload all />

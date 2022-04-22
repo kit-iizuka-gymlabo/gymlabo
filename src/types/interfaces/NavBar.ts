@@ -1,6 +1,7 @@
 type NavBarProps = {
   drawerState: boolean
-  drawerHandler: (event: React.MouseEvent<HTMLElement>) => void
+  openDrawer: () => void 
+  closeDrawer: () => void
 }
 
 export default NavBarProps
