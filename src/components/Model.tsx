@@ -1,8 +1,9 @@
+import { FC } from 'react'
 import { useGLTF } from '@react-three/drei'
 import ModelProps from '@/types/interfaces/Model'
 import useModalStore from '@/hooks/useModalStore'
 
-const Model = ({ model_path }: ModelProps) => {
+const Model: FC<ModelProps> = ({ model_path }) => {
   const store = useModalStore()
   const gltf = useGLTF(model_path)
   
@@ -16,8 +17,7 @@ const Model = ({ model_path }: ModelProps) => {
         />
       </mesh>
     </group>
-
   )
 }
 
-export default Model;
+export default Model

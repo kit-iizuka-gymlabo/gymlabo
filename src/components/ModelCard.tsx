@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import {
   Typography,
   Card, 
@@ -6,7 +7,7 @@ import {
   CardMedia
 } from '@mui/material'
 
-const ModelCard = () => (
+const ModelCard: FC = () => (
   <>
     <Card sx={{ 
       position: 'absolute',

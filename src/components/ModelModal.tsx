@@ -1,8 +1,9 @@
+import { FC } from 'react'
 import { Modal } from '@mui/material'
 import ModelCard from '@/components/ModelCard'
 import useModalStore from '@/hooks/useModalStore'
 
-const ModelModal = () => {
+const ModelModal: FC = () => {
   const store = useModalStore()
   
   return(

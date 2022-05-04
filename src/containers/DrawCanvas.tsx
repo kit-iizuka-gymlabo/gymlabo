@@ -1,11 +1,12 @@
+import { FC } from 'react'
 import dynamic from 'next/dynamic'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Preload, Stage } from '@react-three/drei'
 import path from '@/static/configs/model.json'
 
-const Model = dynamic(() => import('@/components/Model'), { ssr: false})
+const Model = dynamic(() => import('@/components/Model'), { ssr: false })
 
-const DrawCanvas = () => {
+const DrawCanvas: FC = () => {
   return (
     <>
       <Canvas camera={{ position: [0,20,0] }}>

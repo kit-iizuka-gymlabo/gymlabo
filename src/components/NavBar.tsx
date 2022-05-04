@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CloseIcon from '@mui/icons-material/Close'
@@ -17,7 +17,7 @@ import {
 import DrawerHeader from '@/styles/Navbar'
 import NavBarProps from '@/types/interfaces/NavBar'
 
-const NavBar = ({ ...props }: NavBarProps) => (
+const NavBar: FC<NavBarProps> = ({ ...props }) => (
   <>
     <AppBar position="absolute">
       <Toolbar>
