@@ -1,8 +1,8 @@
 import { styled } from '@mui/material'
 
-const DrawerStyle = styled('div')(({ theme }) => ({
-  width: '100vw',
-  height: '100vh'
+const DrawerStyle = styled('div')(() => ({
+  'width': '100vw',
+  'height': '100vh'
 }));
 
 export default DrawerStyle
