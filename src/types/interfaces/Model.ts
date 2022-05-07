@@ -1,5 +1,8 @@
+import { GLTF } from 'three-stdlib'
+
 type ModelProps = {
-  model_path: string
+  onClick: () => void
+  gltf: GLTF
 }
 
 export default ModelProps
