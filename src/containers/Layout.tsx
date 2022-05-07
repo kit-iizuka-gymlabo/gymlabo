@@ -1,18 +1,27 @@
-import React from 'react'
-import Meta from '@/components/Meta'
-import Header from '@/containers/Header'
+import { FC } from 'react'
+import Meta from '@/components/organisms/Meta'
+import Header from '@/components/organisms/Header'
+import useDrawerStore from '@/hooks/useDrawerStore'
 import meta from '@/static/configs/meta.json'
-import HOCProps from '@/types/interfaces/HOC'
+import LayoutProps from '@/types/interfaces/Layout'
 
-const Layout = ({ children }: HOCProps) => (
-  <> 
-    <Meta 
-      detail={meta.detail}
-      path={meta.path}
-    />
-    <Header />
-    {children}
-  </>
-)
+const Layout: FC<LayoutProps> = ({ children }) => {
+  const store = useDrawerStore()
+
+  return (
+    <> 
+      <Meta 
+        detail={meta.detail}
+        path={meta.path}
+      />
+      <Header
+        drawerState={store.drawerState}
+        openDrawer={store.openDrawer}
+        closeDrawer={store.closeDrawer}
+      />
+      {children}
+    </>
+  )
+}
 
 export default Layout

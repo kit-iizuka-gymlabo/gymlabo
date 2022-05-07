@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 import MenuIcon from '@mui/icons-material/Menu'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CloseIcon from '@mui/icons-material/Close'
@@ -14,10 +14,10 @@ import {
   ListItemIcon,
   IconButton
 } from '@mui/material'
-import DrawerHeader from '@/styles/Navbar'
-import NavBarProps from '@/types/interfaces/NavBar'
+import DrawerHeader from '@/styles/DrawerHeader'
+import HeaderProps from '@/types/interfaces/Header'
 
-const NavBar = ({ ...props }: NavBarProps) => (
+const Header: FC<HeaderProps> = ({ ...props }) => (
   <>
     <AppBar position="absolute">
       <Toolbar>
@@ -58,4 +58,4 @@ const NavBar = ({ ...props }: NavBarProps) => (
   </>
 )
 
-export default NavBar
+export default Header

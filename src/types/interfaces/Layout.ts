@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-type HOCProps = {
+type LayoutProps = {
   children: ReactNode
 }
 
-export default HOCProps
+export default LayoutProps
