@@ -1,61 +1,40 @@
 import { FC } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import SettingsIcon from '@mui/icons-material/Settings'
-import CloseIcon from '@mui/icons-material/Close'
 import {
-  AppBar,
-  Toolbar,
+  Button,
   Drawer,
-  Divider,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  IconButton
-} from '@mui/material'
-import DrawerHeader from '@/styles/DrawerHeader'
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import HeaderProps from '@/types/interfaces/Header'
 
-const Header: FC<HeaderProps> = ({ ...props }) => (
+const Header: FC<HeaderProps> = ({ isOpen, onOpen, onClose}) => (
   <>
-    <AppBar position="absolute">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          onClick={props.openDrawer}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <Button onClick={onOpen}>
+      <HamburgerIcon />
+    </Button>
     <Drawer
-      variant="temporary"
-      open={props.drawerState}
-      onClose={props.closeDrawer}
+      isOpen={isOpen}
+      placement='left'
+      onClose={onClose}
     >
-      <DrawerHeader>
-        <Typography variant="h6">
-          Virtual KIT Campus
-        </Typography>
-        <IconButton
-          color="inherit"
-          onClick={props.closeDrawer}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Settings" />
-        </ListItem>
-      </List>
+      <DrawerOverlay />
+      <DrawerContent>
+       <DrawerCloseButton />
+       <DrawerHeader>GYMLABO</DrawerHeader>
+       <DrawerBody>
+
+       </DrawerBody>
+       <DrawerFooter>
+
+       </DrawerFooter>
+      </DrawerContent>
     </Drawer>
-  </>
+    </>
 )
 
 export default Header
