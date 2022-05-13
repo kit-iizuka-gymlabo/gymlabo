@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import path from '@/configs/model.json'
 import Poster from '@/containers/Poster'
-import DrawCanvas from '@/components/organisms/DrawCanvas'
+import DrawCanvas from '@/containers/DrawCanvas'
 
 const IndexPage: NextPage = () => (
   <>
