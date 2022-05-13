@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import { useGLTF } from '@react-three/drei'
 import PosterProps from '@/types/interfaces/Poster'
 import Model from '@/components/molecules/Model'

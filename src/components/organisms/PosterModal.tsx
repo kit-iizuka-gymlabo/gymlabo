@@ -27,7 +27,7 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
         </ModalBody>
         <ModalFooter>
           <Button colorScheme='blue' mr={3} onClick={onClose}>
-            Close
+            閉じる
           </Button>
         </ModalFooter>
       </ModalContent>
