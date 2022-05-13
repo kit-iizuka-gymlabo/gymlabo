@@ -26,7 +26,6 @@ const Meta: FC<MetaProps> = ({ detail, path }) => (
       <link rel='apple-touch-icon' type='image/png' href={path.icon} sizes='180x180' />
 
       <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"></link>
     </Head>
   </> 
 )

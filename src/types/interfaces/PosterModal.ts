@@ -1,5 +1,5 @@
 type PosterModalProps = {
-  modalState: boolean
+  isOpen: boolean
   onClose: () => void
 }
 

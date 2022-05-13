@@ -1,61 +1,50 @@
 import { FC } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import SettingsIcon from '@mui/icons-material/Settings'
-import CloseIcon from '@mui/icons-material/Close'
 import {
-  AppBar,
-  Toolbar,
+  Button,
   Drawer,
-  Divider,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  IconButton
-} from '@mui/material'
-import DrawerHeader from '@/styles/DrawerHeader'
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from '@chakra-ui/react'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import HeaderProps from '@/types/interfaces/Header'
 
-const Header: FC<HeaderProps> = ({ ...props }) => (
+const Header: FC<HeaderProps> = ({
+  isOpen,
+  onOpen,
+  onClose,
+  handleLogOut
+}) => (
   <>
-    <AppBar position="absolute">
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          onClick={props.openDrawer}
-        >
-          <MenuIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
-    <Drawer
-      variant="temporary"
-      open={props.drawerState}
-      onClose={props.closeDrawer}
+    <Button
+      onClick={onOpen}
+      colorScheme='blackAlpha'
+      size='lg'
+      zIndex={1}
     >
-      <DrawerHeader>
-        <Typography variant="h6">
-          Virtual KIT Campus
-        </Typography>
-        <IconButton
-          color="inherit"
-          onClick={props.closeDrawer}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DrawerHeader>
-      <Divider />
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Settings" />
-        </ListItem>
-      </List>
+      <HamburgerIcon />
+    </Button>
+    <Drawer
+      isOpen={isOpen}
+      placement='left'
+      onClose={onClose}
+    >
+      <DrawerOverlay />
+      <DrawerContent>
+       <DrawerCloseButton />
+       <DrawerHeader>GYMLABO</DrawerHeader>
+       <DrawerBody>
+        <Button onClick={handleLogOut}>ログアウト</Button>
+       </DrawerBody>
+       <DrawerFooter>
+
+       </DrawerFooter>
+      </DrawerContent>
     </Drawer>
-  </>
+    </>
 )
 
 export default Header

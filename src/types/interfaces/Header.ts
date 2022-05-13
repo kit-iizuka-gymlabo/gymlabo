@@ -1,7 +1,8 @@
 type HeaderProps = {
-  drawerState: boolean
-  openDrawer: () => void 
-  closeDrawer: () => void
+  isOpen: boolean
+  onOpen: () => void 
+  onClose: () => void
+  handleLogOut: () => Promise<void>
 }
 
 export default HeaderProps

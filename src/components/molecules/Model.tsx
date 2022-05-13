@@ -1,7 +1,7 @@
-import { FC, useRef, memo } from 'react'
+import { FC } from 'react'
 import ModelProps from '@/types/interfaces/Model'
 
-const Model: FC<ModelProps> = memo(({ onClick, gltf }) => (
+const Model: FC<ModelProps> = ({ onClick, gltf }) => (
   <group>
     <mesh onClick={onClick}>
       <primitive 
@@ -11,6 +11,6 @@ const Model: FC<ModelProps> = memo(({ onClick, gltf }) => (
       />
     </mesh>
   </group>
-))
+)
 
 export default Model
