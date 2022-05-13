@@ -1,7 +1,8 @@
+import { ThreeEvent } from '@react-three/fiber'
 import { GLTF } from 'three-stdlib'
 
 type ModelProps = {
-  onClick: () => void
+  onClick: (e: ThreeEvent<MouseEvent>) => void
   gltf: GLTF
 }
 
