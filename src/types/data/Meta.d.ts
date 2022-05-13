@@ -1,4 +1,4 @@
-import MetaProps from 'types/Meta'
+import MetaProps from '@/types/interfaces/Meta'
 
 declare module '*/meta.json' {
     const value: MetaProps
