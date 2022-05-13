@@ -12,9 +12,19 @@ import {
 import { HamburgerIcon } from '@chakra-ui/icons'
 import HeaderProps from '@/types/interfaces/Header'
 
-const Header: FC<HeaderProps> = ({ isOpen, onOpen, onClose}) => (
+const Header: FC<HeaderProps> = ({
+  isOpen,
+  onOpen,
+  onClose,
+  handleLogOut
+}) => (
   <>
-    <Button onClick={onOpen}>
+    <Button
+      onClick={onOpen}
+      colorScheme='blackAlpha'
+      size='lg'
+      zIndex={1}
+    >
       <HamburgerIcon />
     </Button>
     <Drawer
@@ -27,7 +37,7 @@ const Header: FC<HeaderProps> = ({ isOpen, onOpen, onClose}) => (
        <DrawerCloseButton />
        <DrawerHeader>GYMLABO</DrawerHeader>
        <DrawerBody>
-
+        <Button onClick={handleLogOut}>ログアウト</Button>
        </DrawerBody>
        <DrawerFooter>
 
