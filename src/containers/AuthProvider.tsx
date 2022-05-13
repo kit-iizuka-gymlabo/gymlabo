@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect, FC } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { app } from '@/utils/firebase'
-import { UserType, AuthContextProps, AuthProps } from '@/types/interfaces/AuthProvider'
+import { UserType, AuthContextProps } from '@/types/interfaces/AuthProvider'
 
 const AuthContext = createContext<Partial<AuthContextProps>>({})
 
@@ -10,7 +10,7 @@ export const useAuthContext = () => {
   return useContext(AuthContext)
 }
 
-const AuthProvider: FC<AuthProps> = ({ children }) => {
+const AuthProvider: FC = ({ children }) => {
   const router = useRouter()
   const auth = getAuth(app)
   const [user, setUser] = useState<UserType>(null)

@@ -6,7 +6,3 @@ export type UserType = User | null
 export type AuthContextProps = {
   user: UserType
 }
-
-export type AuthProps = {
-  children: ReactNode
-}

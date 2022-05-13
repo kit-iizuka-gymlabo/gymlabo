@@ -1,9 +1,8 @@
 import { FC } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Preload } from '@react-three/drei'
-import DrawCanvasProps from '@/types/interfaces/DrawCanvas'
 
-const DrawCanvas: FC<DrawCanvasProps> = ({ children }) => (
+const DrawCanvas: FC = ({ children }) => (
   <>
     <Canvas
       style={{
