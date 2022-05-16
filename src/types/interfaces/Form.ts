@@ -9,6 +9,7 @@ export type FormProps = {
   handleSubmit: UseFormHandleSubmit<FormInput>,
   formState: FormState<FormInput>,
   onSubmit: (input: FormInput) => Promise<void>
+  isDisabled: boolean
 }
 
 export type FormInput = {

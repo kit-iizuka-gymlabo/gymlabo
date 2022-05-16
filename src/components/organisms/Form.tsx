@@ -17,6 +17,7 @@ const Form: FC<FormProps> = ({
   handleSubmit,
   formState: { errors, isSubmitting },
   onSubmit,
+  isDisabled,
   children
 }) => (
   <>
@@ -76,7 +77,13 @@ const Form: FC<FormProps> = ({
               {errors.password && errors.password.message}
             </FormErrorMessage>
           </FormControl>
-          <Button mt={4} colorScheme='teal' isLoading={isSubmitting} type='submit'>
+          <Button
+            mt={4}
+            colorScheme='teal'
+            isLoading={isSubmitting}
+            type='submit'
+            isDisabled={isDisabled}
+          >
             送信
           </Button>
           <Divider />
