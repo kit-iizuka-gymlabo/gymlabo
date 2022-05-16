@@ -1,14 +1,9 @@
-import { createContext, useState, useContext, useEffect, FC } from 'react'
+import { useState, useEffect, FC } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useRouter } from 'next/router'
+import { AuthContext } from '@/hooks/useAuth'
 import { app } from '@/utils/firebase'
-import { UserType, AuthContextProps } from '@/types/interfaces/AuthProvider'
-
-const AuthContext = createContext<Partial<AuthContextProps>>({})
-
-export const useAuthContext = () => {
-  return useContext(AuthContext)
-}
+import { UserType } from '@/types/interfaces/AuthProvider'
 
 const AuthProvider: FC = ({ children }) => {
   const router = useRouter()
