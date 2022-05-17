@@ -15,12 +15,12 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import FormLink from '@/components/atoms/FormLink'
+import AuthButton from '@/components/molecules/AuthButton'
 import useAuth from '@/hooks/useAuth'
 
 const Header: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { handleLogOut } = useAuth()
+  const { handleLogOut, isLoggedIn } = useAuth()
 
   return (
     <>
@@ -36,14 +36,10 @@ const Header: FC = () => {
           </Button>
         </Box>
         <Spacer />
-        <ButtonGroup gap='2' zIndex={1}>
-          <Button colorScheme='teal' variant='outline'>
-            <FormLink url='/SignUp' text='SignUp'/>
-          </Button>
-          <Button colorScheme='teal' variant='outline'>
-            <FormLink url='/LogIn' text='LogIn'/>
-          </Button>
-        </ButtonGroup>
+        <AuthButton
+          isLoggedIn={isLoggedIn}
+          handleLogOut={handleLogOut}
+        />
       </Flex>
       <Drawer
         isOpen={isOpen}
@@ -55,10 +51,8 @@ const Header: FC = () => {
         <DrawerCloseButton />
         <DrawerHeader>GYMLABO</DrawerHeader>
         <DrawerBody>
-          <Button onClick={handleLogOut}>ログアウト</Button>
         </DrawerBody>
-        <DrawerFooter>
-
+        <DrawerFooter>\
         </DrawerFooter>
         </DrawerContent>
       </Drawer>
