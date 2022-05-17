@@ -1,12 +1,12 @@
 import { FC } from 'react'
-import { Html } from '@react-three/drei'
 import { Progress } from '@chakra-ui/react'
+import ChakraWrapper from '@/components/atoms/ChakraWrapper'
 import LoaderProps from '@/types/interfaces/Loader'
 
 const Loader: FC<LoaderProps> = ({ progress }) => (
-  <Html center>
+  <ChakraWrapper>
     <Progress value={progress} />
-  </Html>
+  </ChakraWrapper>
 )
 
 export default Loader
