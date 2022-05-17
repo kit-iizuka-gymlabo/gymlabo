@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   UseFormRegister,
   UseFormHandleSubmit,
@@ -10,7 +9,7 @@ export type FormProps = {
   handleSubmit: UseFormHandleSubmit<FormInput>,
   formState: FormState<FormInput>,
   onSubmit: (input: FormInput) => Promise<void>
-  children: ReactNode
+  isDisabled: boolean
 }
 
 export type FormInput = {

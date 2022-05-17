@@ -1,55 +1,36 @@
-import { FC, useRef } from 'react'
+import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAuthContext } from '@/containers/AuthProvider'
+import { useToast } from '@chakra-ui/react'
 import Form from '@/components/organisms/Form'
 import FormLink from '@/components/atoms/FormLink'
 import useAuth from '@/hooks/useAuth'
 import { FormInput } from '@/types/interfaces/Form'
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  Button
-} from '@chakra-ui/react'
 
 const SignUpForm: FC = () => {
-  const cancelRef = useRef(null)
-  const { handleSignUp, onClose } = useAuth()
-  const { user } = useAuthContext()
+  const toast = useToast()
+  const { handleSignUp, onClose, isLoggedIn } = useAuth()
   const { register, handleSubmit, formState } = useForm<FormInput>()
-  const isLoggedIn = !!user
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      toast({
+        title: '注意：既にログイン済みです',
+        position: 'top',
+        status: 'warning',
+        isClosable: true,
+        onCloseComplete: onClose
+      })
+    }
+  }, [])
 
   return (
     <>
-      <AlertDialog
-        isOpen={isLoggedIn}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              注意 
-            </AlertDialogHeader>
-            <AlertDialogBody>
-              既にログインしています
-            </AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                トップに戻る
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
       <Form
         register={register}
         handleSubmit={handleSubmit}
         formState={formState}
         onSubmit={handleSignUp}
+        isDisabled={false}
       >
         <FormLink 
           url={'/LogIn'}
