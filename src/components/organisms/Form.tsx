@@ -55,6 +55,7 @@ const Form: FC<FormProps> = ({
             <FormLabel>パスワード</FormLabel>
             <Input 
               id='password'
+              type='password'
               placeholder='password'
               {...register('password', {
                 required: 'パスワードは必須です',
