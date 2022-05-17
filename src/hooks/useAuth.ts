@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { useRouter } from 'next/router'
+import { useToast } from '@chakra-ui/react'
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -14,6 +15,7 @@ import { AuthContextProps } from '@/types/interfaces/AuthProvider'
 export const AuthContext = createContext<Partial<AuthContextProps>>({})
 
 const useAuth = (): Auth => {
+  const toast = useToast()
   const router = useRouter()
   const auth = getAuth(app)
   const context = useContext(AuthContext)
@@ -27,7 +29,13 @@ const useAuth = (): Auth => {
     })
     .catch((error) => {
       if (`${error.message}`.indexOf('already') !== -1) {
-        alert('既に登録済みのメールアドレスです')
+        toast({
+          title: '注意：既に登録済みのアカウントです',
+          position: 'top',
+          status: 'warning',
+          isClosable: true,
+          onCloseComplete: onClose
+        }) 
       }
     })
   }
