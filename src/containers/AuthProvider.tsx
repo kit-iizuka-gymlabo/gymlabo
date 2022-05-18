@@ -9,15 +9,27 @@ const AuthProvider: FC = ({ children }) => {
   const router = useRouter()
   const auth = getAuth(app)
   const [user, setUser] = useState<UserType>(null)
+  const [isAdmin, setIsAdmin] = useState<boolean | undefined>(undefined)
+  const value = { user, isAdmin }
   const isAvailableForViewing =
     router.pathname === '/LogIn' ||
-    router.pathname === '/SignUp'
-  const value = { user }
+    router.pathname === '/SignUp' ||
+    router.pathname === '/'
 
   useEffect(() => {
     const authStateChanged = onAuthStateChanged(auth, async (user) => {
       setUser(user)
-      !user && !isAvailableForViewing && (await router.push('/LogIn'))
+      if (user) {
+        await user.getIdTokenResult(true).then((result) => {
+          if (!!result.claims.admin) {
+            setIsAdmin(true)
+          } else {
+            setIsAdmin(false)
+          }
+        })
+      } else {
+        !isAvailableForViewing && (await router.push('/'))
+      }
     })
     return () => {
       authStateChanged()

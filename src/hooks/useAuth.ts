@@ -19,13 +19,13 @@ const useAuth = (): Auth => {
   const router = useRouter()
   const auth = getAuth(app)
   const context = useContext(AuthContext)
-  const { user } = context
+  const { user, isAdmin } = context
   const isLoggedIn = !!user
 
   const handleSignUp = async(input: FormInput) => {
     await createUserWithEmailAndPassword(auth, input.email, input.password)
     .then(() => {
-      router.push('/')
+      onClose()
     })
     .catch((error) => {
       if (`${error.message}`.indexOf('already') !== -1) {
@@ -42,12 +42,12 @@ const useAuth = (): Auth => {
 
   const handleLogIn = async(input: FormInput) => {
     await signInWithEmailAndPassword(auth, input.email, input.password)
-    router.push('/')
+    onClose()
   }
 
   const handleLogOut = async() => {
     await signOut(auth)
-    await router.push('/')
+    onClose()
   }
 
   const onClose = async() => {
@@ -59,7 +59,8 @@ const useAuth = (): Auth => {
     handleLogIn,
     handleLogOut,
     onClose,
-    isLoggedIn
+    isLoggedIn,
+    isAdmin
   }
 }
 

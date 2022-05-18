@@ -1,5 +1,4 @@
 import { FormInput } from '@/types/interfaces/Form'
-import { AuthContextProps } from '@/types/interfaces/AuthProvider'
 
 type Auth = {
   handleSignUp: (input: FormInput) => Promise<void>
@@ -7,6 +6,7 @@ type Auth = {
   handleLogOut: () => Promise<void>
   onClose: () => Promise<void>
   isLoggedIn: boolean
+  isAdmin: boolean | undefined 
 }
 
 export default Auth
