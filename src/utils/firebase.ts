@@ -3,6 +3,7 @@ import { initializeApp, FirebaseOptions, FirebaseApp } from 'firebase/app'
 const firebaseConfig: FirebaseOptions = {
   apiKey: 'AIzaSyDzF3T8evUhiLy6awDBHoJVgyTtBuvfdZo',
   authDomain: 'gymlabo.firebaseapp.com',
+  databaseURL: 'https://gymlabo-default-rtdb.firebaseio.com',
   projectId: 'gymlabo',
   storageBucket: 'gymlabo.appspot.com',
   messagingSenderId: '770214888689',
