@@ -3,6 +3,7 @@ import path from '@/configs/model.json'
 import Poster from '@/containers/Poster'
 import Header from '@/containers/Header'
 import DrawCanvas from '@/containers/DrawCanvas'
+import Player from '@/containers/Player'
 
 const IndexPage: NextPage = () => (
   <>
@@ -11,6 +12,7 @@ const IndexPage: NextPage = () => (
       <Poster
         modelPath={path.model_path}
       />
+      <Player />
     </DrawCanvas>
   </>
 )
