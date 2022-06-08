@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { FC, useEffect } from 'react'
+import { useGLTF, useAnimations } from '@react-three/drei'
 import { useDisclosure } from '@chakra-ui/react'
 import PosterProps from '@/types/interfaces/Poster'
 import Model from '@/components/molecules/Model'
@@ -9,6 +9,11 @@ import ChakraWrapper from '@/components/atoms/ChakraWrapper'
 const Poster: FC<PosterProps> = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { scene, animations } = useGLTF(modelPath);
+  const { actions } = useAnimations(animations, scene);
+  useEffect(() => {
+    actions.Run?.play();
+  }, [actions, scene]);
 
   return (
     <>
