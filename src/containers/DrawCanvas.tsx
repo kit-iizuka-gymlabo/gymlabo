@@ -18,13 +18,7 @@ const DrawCanvas: FC = ({ children }) => {
         camera={{ position: [0,20,0] }}
       >
         <Sky />
-        <OrbitControls
-          enablePan={false}
-          enableZoom={true}
-          enableRotate={true}
-          minPolarAngle={Math.PI/3}
-          maxPolarAngle={Math.PI/2}
-        />
+ 
         <ambientLight intensity={0.5}/>
         <directionalLight
           position={[10,20,0]}

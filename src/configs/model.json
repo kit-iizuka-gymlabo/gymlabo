@@ -1,3 +1,10 @@
 {
-  "model_path": "/kyutech_map.glb"
+  "player": {
+    "model_path": "/orange_man.glb"
+  },
+  "posters": [
+    {
+      "model_path": "/kyutech_map.glb"
+    }
+  ]
 }
