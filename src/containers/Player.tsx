@@ -2,81 +2,86 @@ import { useRef, useEffect } from 'react'
 import { useFrame, useThree} from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei'
 import { useKey } from 'react-use'
-import { BoxBufferGeometry, Mesh, Material, Vector3 } from 'three';
-
-
-type PlayerPositionRef = Mesh<BoxBufferGeometry, Material | Material[]>;
-
-// キーが押されていることを表す
-var isForwardMove: boolean = false;
-var isRightMove: boolean = false;
-var isBackMove:  boolean = false;
-var isLeftMove:  boolean = false;
+import { BoxBufferGeometry, Mesh, Material, Vector3, Plane} from 'three';
+import { useDrag } from "@use-gesture/react";
 
 
 const Player = () => {
-
   const { camera } = useThree();
-  const playerPos = useRef<PlayerPositionRef>(null);
-  const orbitControls = useRef<OrbitControls>();          // <- これどうしたら赤線消える...？ (あとOrbitControlsのrefが必要なのでOrbitControlsを移動させました -> refが扱えればここに置く必要なし)
+  camera.position.set(0, 2, 2.5);
+  const player = useRef({position: new Vector3(0.0, 0.0, 0.0), rotation: new Vector3(0.0, 0.0, 0.0)});
+  const box = useRef({position: new Vector3(0.0, 0.0, 0.0)});
 
-  const speed: number = 2.2;
-  const vec = new Vector3();  // カメラとプレイヤーの角度・位置計算用
-
-  const moveForward = (distance: number) => {
-    if(playerPos.current != null){
-      vec.setFromMatrixColumn(camera.matrix, 0);
-      vec.crossVectors(camera.up, vec);
-      camera.position.addScaledVector(vec, distance)
-      orbitControls.current.target.addScaledVector(vec, distance);
-      playerPos.current.position.addScaledVector(vec, distance);
-      playerPos.current.rotation.y = orbitControls.current.getAzimuthalAngle();
+  var _pos = new Vector3();
+  const bind = useDrag(
+    ({active, event}) => {
+      event.ray.intersectPlane(plane, _pos);
+      if(box.current!= null) {
+        box.current.position.x = _pos.x;
+        box.current.position.y = 0;
+        box.current.position.z = _pos.z;
+      }
     }
-  };
+  );
 
-  const moveRight = (distance: number) => {
-    if(playerPos.current != null){
-      vec.setFromMatrixColumn(camera.matrix, 0);
-      camera.position.addScaledVector(vec, distance)
-      orbitControls.current.target.addScaledVector(vec, distance);
-      playerPos.current.position.addScaledVector(vec, distance);
-      playerPos.current.rotation.y = orbitControls.current.getAzimuthalAngle();
-    }
-  };
+  const orbitControls = useRef<OrbitControlsImpl>(null);          // <- これどうしたら赤線消える...？ (あとOrbitControlsのrefが必要なのでOrbitControlsを移動させました -> refが扱えればここに置く必要なし)
 
-  // キー操作 (もっとシンプルにできるはず)
-  useKey('w', ()=>{isForwardMove = true}, {event: 'keydown'}); useKey('w', ()=>{isForwardMove = false;}, {event: 'keyup'});
-  useKey('a', ()=>{isLeftMove    = true}, {event: 'keydown'}); useKey('a', ()=>{isLeftMove  = false},    {event: 'keyup'}); 
-  useKey('s', ()=>{isBackMove    = true}, {event: 'keydown'}); useKey('s', ()=>{isBackMove  = false},    {event: 'keyup'});
-  useKey('d', ()=>{isRightMove   = true}, {event: 'keydown'}); useKey('d', ()=>{isRightMove = false},    {event: 'keyup'}); 
+  const plane = new Plane(new Vector3(0, 1, 0), 0);  
 
-  useKey('ArrowUp',    ()=>{isForwardMove = true}, {event: 'keydown'}); useKey('ArrowUp',    ()=>{isForwardMove = false;}, {event: 'keyup'});
-  useKey('ArrowLeft',  ()=>{isLeftMove    = true}, {event: 'keydown'}); useKey('ArrowLeft',  ()=>{isLeftMove  = false},    {event: 'keyup'}); 
-  useKey('ArrowDown',  ()=>{isBackMove    = true}, {event: 'keydown'}); useKey('ArrowDown',  ()=>{isBackMove  = false},    {event: 'keyup'});
-  useKey('ArrowRight', ()=>{isRightMove   = true}, {event: 'keydown'}); useKey('ArrowRight', ()=>{isRightMove = false},    {event: 'keyup'}); 
+  const move = (speed: number, radian: number) => {
+    player.current.position.x += speed * Math.cos(radian);
+    player.current.position.z += speed * Math.sin(radian);
+    player.current.rotation.y = -radian;
+    orbitControls.current.object.position.x += speed * Math.cos(radian);
+    orbitControls.current.object.position.z += speed * Math.sin(radian);
+    console.log(orbitControls.current.object.position);
+    camera.lookAt(player.current.position);
+    orbitControls.current.target = player.current.position;
+  }
+
+  const calcDirection = () => {
+    const _box = new Vector3(box.current.position.x, box.current.position.y, box.current.position.z);
+    const _player = new Vector3(player.current.position.x, player.current.position.y, player.current.position.z);
+    var speed: number = 0.0;
+    var radian: number = 0.0;
+    speed = 2.2;
+    radian = Math.atan2(_box.z - _player.z, _box.x - _player.x);
+    return radian;
+  }
+
+  const cameraMove = () => {
+    var orbitAngle = orbitControls.current.getAzimuthalAngle();
+    var playerAngle = player.current.rotation.y;
+    var distance = (player.current.rotation.y-Math.PI/2) - orbitAngle;
+    orbitControls.current.setAzimuthalAngle( orbitAngle += 0.2 * distance);
+  }
 
   // delta をかけることによって速度がデバイスの処理速度に依存しない
   useFrame((_, delta) => {
-      if(isForwardMove) moveForward(delta * speed);
-      if(isBackMove)    moveForward(-delta * speed);
-      if(isRightMove)   moveRight(delta * speed);
-      if(isLeftMove)    moveRight(-delta * speed);
+    if(Math.abs(box.current.position.x - player.current.position.x) + Math.abs(box.current.position.z - player.current.position.z) > 0.2){
+      const radian = calcDirection();
+      if(radian != undefined) move(delta*2.2, radian);
+    }
+    cameraMove();
   });
-
+  
   return (
     <>
     <OrbitControls
       ref={orbitControls}
-      target={playerPos.current?.position}
-      enablePan={false}
-      enableZoom={true}
-      enableRotate={true}
-      minPolarAngle={Math.PI/3}
-      maxPolarAngle={Math.PI/2}
+      enableRotate={false}
     />
-      <mesh ref={playerPos} position={[0, 0.25, 0]}>
+      <mesh ref={player} position={[0, 0.25, 0]}>
+        <boxGeometry args={[0.1, 0.4, 0.2]} />
+        <meshPhongMaterial color="yellow" />
+      </mesh>
+      <mesh ref={box}  position={[0, 0.25, 0]}>
         <boxGeometry args={[0.2, 0.5, 0.2]} />
         <meshPhongMaterial color="yellow" />
+      </mesh>
+      <mesh rotation-x={Math.PI * -0.5} {...bind()}>
+      <planeBufferGeometry  args={[1000, 1000]}/>
+      <meshPhongMaterial color="white" />
       </mesh>
     </>
   )
