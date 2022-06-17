@@ -10,16 +10,14 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
   const { camera } = useThree();
   const player = useRef({position: new Vector3(0.0, 0.0, 0.0), rotation: new Vector3(0.0, 0.0, 0.0)});
-  camera.position.set(player.current.position.x, 1, player.current.position.z+1);
+  camera.position.set(player.current.position.x, 1.5, player.current.position.z+2);
+  
   const box = useRef({position: new Vector3(0.0, 0.0, 0.0)});
-
+  const plane = new Plane(new Vector3(0, 1, 0), 0);  
   var _pos = new Vector3();
   const bind = useDrag(
     ({event}) => {
-      console.log(event);
-      _pos.x = event.intersections[0].point.x;
-      _pos.y = event.intersections[0].point.y;
-      _pos.z = event.intersections[0].point.z;
+      event.ray.intersectPlane(plane, _pos);
       if(box.current!= null) {
         box.current.position.x = _pos.x;
         box.current.position.y = 0.1;
@@ -28,14 +26,12 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
     }
   );
 
-  const orbitControls = useRef<OrbitControlsImpl>(null);          // <- これどうしたら赤線消える...？ (あとOrbitControlsのrefが必要なのでOrbitControlsを移動させました -> refが扱えればここに置く必要なし)
-
-  const plane = new Plane(new Vector3(0, 1, 0), 0);  
+  const orbitControls = useRef(null);          // <- これどうしたら赤線消える...？ (あとOrbitControlsのrefが必要なのでOrbitControlsを移動させました -> refが扱えればここに置く必要なし)
 
   const move = (speed: number, theta: number) => {
     player.current.position.x += speed * Math.cos(theta);
     player.current.position.z += speed * Math.sin(theta);
-    player.current.rotation.y = -(theta+Math.PI/2);
+    player.current.rotation.y = -theta+Math.PI/2;
     orbitControls.current.object.position.x += speed * Math.cos(theta);
     orbitControls.current.object.position.z += speed * Math.sin(theta);
     camera.lookAt(player.current.position);
@@ -60,7 +56,7 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
       if(speed > 3.0) speed = 3.0;
       if(theta != undefined) move(delta*speed, theta);
     }
-    orbitControls.current.setAzimuthalAngle( player.current.rotation.y );
+    orbitControls.current.setAzimuthalAngle( player.current.rotation.y+Math.PI );
   });
   
   return (
@@ -68,6 +64,7 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
     <OrbitControls
       ref={orbitControls}
       enableRotate={false}
+      enablePan={false}
       dampingFactor={0.008}
     />
       <Model 
@@ -75,7 +72,7 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
         ref={player}
       />
       <mesh ref={box}  position={[0, 0.25, 0]}>
-        <cylinderGeometry args={[0.05, 0.06, 0.05]} />
+        <cylinderGeometry args={[0.04, 0.04,0.03]} />
         <meshPhongMaterial color="red" />
       </mesh>
       <mesh rotation-x={Math.PI * -0.5} {...bind()}>
