@@ -76,8 +76,8 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
         <meshPhongMaterial color="red" />
       </mesh>
       <mesh rotation-x={Math.PI * -0.5} {...bind()}>
-      <planeBufferGeometry  args={[1000, 1000]}/>
-      <meshPhongMaterial color="white" />
+        <planeBufferGeometry args={[1000, 1000]} />
+        <meshStandardMaterial transparent={true} opacity={0.0} />
       </mesh>
     </>
   )

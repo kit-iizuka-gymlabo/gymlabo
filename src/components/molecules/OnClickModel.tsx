@@ -2,7 +2,7 @@ import { FC } from 'react'
 import OnClickModelProps from '@/types/interfaces/OnClickModel'
 
 const OnClickModel: FC<OnClickModelProps> = ({ onClick, gltf }) => (
-  <mesh onClick={onClick}>
+  <mesh /*onClick={onClick}*/>
     <primitive
       object={gltf.scene}
       position={[0, 0, 0]}
