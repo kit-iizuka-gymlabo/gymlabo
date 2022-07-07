@@ -1,10 +1,11 @@
 import { useRef, FC } from 'react'
-import { useFrame, useThree} from '@react-three/fiber';
+import { ThreeEvent, useFrame, useThree} from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { Vector3, Plane} from 'three';
 import { useDrag } from "@use-gesture/react";
 import Model from '@/components/molecules/Model';
 import PlayerProps from '@/types/interfaces/Player'
+import { OrbitControls as OrbitControlsImpl } from "three-stdlib"; 
 
 const Player: FC<PlayerProps> = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
@@ -15,18 +16,18 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
   const box = useRef({position: new Vector3(0.0, 0.0, 0.0)});
   const plane = new Plane(new Vector3(0, 1, 0), 0);  
   var _pos = new Vector3();
-  const bind = useDrag(
-    ({event}) => {
+  const bind = useDrag<ThreeEvent<MouseEvent>>(
+    ({ event }) => {
       event.ray.intersectPlane(plane, _pos);
-      if(box.current!= null) {
+      if (box.current != null) {
         box.current.position.x = _pos.x;
         box.current.position.y = 0.1;
         box.current.position.z = _pos.z;
       }
     }
-  );
+  )
 
-  const orbitControls = useRef(null);          // <- これどうしたら赤線消える...？ (あとOrbitControlsのrefが必要なのでOrbitControlsを移動させました -> refが扱えればここに置く必要なし)
+  const orbitControls = useRef<OrbitControlsImpl>(null!);
 
   const move = (speed: number, theta: number) => {
     player.current.position.x += speed * Math.cos(theta);
@@ -61,21 +62,21 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
   
   return (
     <>
-    <OrbitControls
-      ref={orbitControls}
-      enableRotate={false}
-      enablePan={false}
-      dampingFactor={0.008}
-    />
-      <Model 
+      <OrbitControls
+        ref={orbitControls}
+        enableRotate={false}
+        enablePan={false}
+        dampingFactor={0.008}
+      />
+      <Model
         gltf={gltf}
         ref={player}
       />
-      <mesh ref={box}  position={[0, 0.25, 0]}>
-        <cylinderGeometry args={[0.04, 0.04,0.03]} />
-        <meshPhongMaterial color="red" />
+      <mesh position={[0, 0.25, 0]} ref={box}>
+        <cylinderGeometry args={[0.04, 0.04, 0.03]} />
+        <meshStandardMaterial transparent={true} opacity={0.0} />
       </mesh>
-      <mesh rotation-x={Math.PI * -0.5} {...bind()}>
+      <mesh {...bind() as any} rotation-x={Math.PI * -0.5}>
         <planeBufferGeometry args={[1000, 1000]} />
         <meshStandardMaterial transparent={true} opacity={0.0} />
       </mesh>
