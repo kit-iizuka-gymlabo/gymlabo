@@ -1,6 +1,6 @@
 import { useRef, FC } from 'react'
 import { ThreeEvent, useFrame, useThree} from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei'
+import { OrbitControls, useAnimations, useGLTF } from '@react-three/drei'
 import { Vector3, Plane} from 'three';
 import { useDrag } from "@use-gesture/react";
 import Model from '@/components/molecules/Model';
@@ -9,6 +9,7 @@ import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 const Player: FC<PlayerProps> = ({ modelPath }) => {
   const gltf = useGLTF(modelPath)
+  const { actions } = useAnimations(gltf.animations, gltf.scene);
   const { camera } = useThree();
   const player = useRef({position: new Vector3(0.0, 0.0, 0.0), rotation: new Vector3(0.0, 0.0, 0.0)});
   camera.position.set(player.current.position.x, 1.5, player.current.position.z+2);
@@ -54,11 +55,17 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
     if(Math.abs(box.current.position.x - player.current.position.x) + Math.abs(box.current.position.z - player.current.position.z) > 0.2){
       var theta : number, speed: number;
       [theta, speed] = calcDirection();
-      if(speed > 3.0) speed = 3.0;
-      if(theta != undefined) move(delta*speed, theta);
+      if (speed > 3.0) speed = 3.0;
+      if (theta != undefined) move(delta * speed, theta);
+      if (actions.Idle?.isRunning) {actions.Idle?.fadeOut; actions.Idle?.reset();}
+      actions.Run?.play();
+    }else {
+      if (actions.Run?.isRunning) { actions.Run?.fadeOut; actions.Run?.reset(); }
+      actions.Idle?.play();
     }
-    orbitControls.current.setAzimuthalAngle( player.current.rotation.y+Math.PI );
+    orbitControls.current.setAzimuthalAngle(player.current.rotation.y + Math.PI);
   });
+
   
   return (
     <>
@@ -72,10 +79,6 @@ const Player: FC<PlayerProps> = ({ modelPath }) => {
         gltf={gltf}
         ref={player}
       />
-      <mesh position={[0, 0.25, 0]} ref={box}>
-        <cylinderGeometry args={[0.04, 0.04, 0.03]} />
-        <meshStandardMaterial transparent={true} opacity={0.0} />
-      </mesh>
       <mesh {...bind() as any} rotation-x={Math.PI * -0.5}>
         <planeBufferGeometry args={[1000, 1000]} />
         <meshStandardMaterial transparent={true} opacity={0.0} />
