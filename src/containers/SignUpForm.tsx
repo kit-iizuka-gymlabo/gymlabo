@@ -36,6 +36,7 @@ const SignUpForm: FC = () => {
           url={'/LogIn'}
           text={'既に登録している人はこちら'}
         />
+        <>{'サインアップ'}</>
       </Form>
     </>
   )

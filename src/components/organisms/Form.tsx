@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import {
-  FormControl,
+ /*  FormControl,
   FormLabel,
   FormErrorMessage,
   Input,
@@ -8,9 +8,27 @@ import {
   Grid,
   GridItem,
   VStack,
-  Divider
+  Divider */
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Link,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+  Grid,
+  GridItem,
+  VStack,
+  FormErrorMessage,
+  Divider,
 } from '@chakra-ui/react'
 import { FormProps } from '@/types/interfaces/Form'
+import { Center } from '@react-three/drei'
 
 const Form: FC<FormProps> = ({
   register,
@@ -22,16 +40,35 @@ const Form: FC<FormProps> = ({
 }) => (
   <>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid templateColumns='repeat(7, 1fr)' gap={6}>
+      {/* <Grid templateColumns='repeat(7, 1fr)' gap={6}>
         <GridItem colSpan={2} />
-        <GridItem colSpan={3}>
-          <VStack spacing={4}>
+        <GridItem colSpan={3}> */}
+        <VStack
+        minH={'100vh'}
+        align={'center'}
+        justify={'center'}
+        bg={useColorModeValue('gray.50', 'gray.800')}>
+          <VStack w={'full'} maxW={'md'} >
+          <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          h='75%'
+          w='100%'
+          p={4}>
+            <Grid gap={4} py={4}>
+          <VStack mx={'auto'} maxW={'lg'}>
+            <Heading fontSize={'4xl'}>
+              <VStack>{children[1]}</VStack>
+            </Heading>
+          </VStack>
+          <Stack px={4}>
           <FormControl
             id='email'
             isRequired
             isInvalid={errors.email ? true : false}
           >
-            <FormLabel>メールアドレス</FormLabel>
+            {<FormLabel>メールアドレス</FormLabel>}
             <Input 
               id='email'
               placeholder='example@example.com'
@@ -78,8 +115,10 @@ const Form: FC<FormProps> = ({
               {errors.password && errors.password.message}
             </FormErrorMessage>
           </FormControl>
+          <VStack>
           <Button
             mt={4}
+            w={'full'}
             colorScheme='teal'
             isLoading={isSubmitting}
             type='submit'
@@ -87,12 +126,16 @@ const Form: FC<FormProps> = ({
           >
             送信
           </Button>
-          <Divider />
-          {children}
           </VStack>
-        </GridItem>
-        <GridItem colSpan={2} />
-      </Grid>
+          <VStack py={4}><Divider /></VStack>
+          <VStack>{children[0]}</VStack>
+          </Stack>
+          </Grid>
+          </Box>
+          </VStack>
+          </VStack>
+        {/* </GridItem>
+      </Grid> */}
     </form>
   </>
 )

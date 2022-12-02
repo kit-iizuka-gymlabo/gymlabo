@@ -37,6 +37,7 @@ const LogInForm: FC = () => {
           url={'/SignUp'}
           text={'ユーザー登録はこちら'}
         />
+        <>{'ログイン'}</>
       </Form>
     </>
   )
