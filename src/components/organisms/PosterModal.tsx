@@ -81,7 +81,7 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
                   <Divider />
                   <Stack>
                     <Flex>
-                      <Text align={'center'}>詳細</Text>
+                      <Text>詳細</Text>
                     </Flex>
                   </Stack>
                 </Stack>
@@ -89,7 +89,7 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
             </Container>
           </ModalBody>
           <Stack align={'center'}>
-            <ModalFooter>
+            <ModalFooter my={'8px'}>
               <Button
                 rounded={'md'}
                 w={'100%'}
