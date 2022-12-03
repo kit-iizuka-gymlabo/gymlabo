@@ -42,7 +42,7 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
                 alt={'GYMLABO Image'}
                 src={'/gymlab.jpg'}
                 fit={'cover'}
-                w={'90%'}
+                w={'92%'}
                 h={'250px'}
                 align={'center'}
               />
@@ -84,28 +84,29 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
                       <Text align={'center'}>詳細</Text>
                     </Flex>
                   </Stack>
-                  {/* <Divider /> */}
-                  <Stack align={'center'}>
-                    <Button
-                      rounded={'md'}
-                      w={'50%'}
-                      my={'2'}
-                      size={'lg'}
-                      py={'5'}
-                      bg={useColorModeValue('gray.900', 'gray.50')}
-                      color={useColorModeValue('white', 'gray.900')}
-                      _hover={{
-                        bg: 'gray',
-                        boxShadow: 'lg'
-                      }}>
-                      ボタン
-                    </Button>
-                  </Stack>
                 </Stack>
               </SimpleGrid>
             </Container>
           </ModalBody>
-          {/* <ModalFooter></ModalFooter> */}
+          <Stack align={'center'}>
+            <ModalFooter>
+              <Button
+                rounded={'md'}
+                w={'100%'}
+                px={'10'}
+                py={'2'}
+                size={'lg'}
+                bg={useColorModeValue('gray.900', 'gray.50')}
+                color={useColorModeValue('white', 'gray.900')}
+                _hover={{
+                  bg: 'gray',
+                  boxShadow: 'lg'
+                }}
+              >
+                ボタン
+              </Button>
+            </ModalFooter>
+          </Stack>
         </ModalContent>
     </Modal>
   </>
