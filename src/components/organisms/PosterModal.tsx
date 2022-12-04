@@ -30,7 +30,7 @@ import PosterModalProps from '@/types/interfaces/PosterModal'
 
 const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
   <>
-    <Modal isOpen={isOpen} onClose={onClose} size={'3xl'} scrollBehavior={'inside'}>
+    <Modal isOpen={isOpen} onClose={onClose} size={'3xl'} scrollBehavior={'inside'} preserveScrollBarGap={true}>
       <ModalOverlay backdropFilter='blur(2px)'/>
         <ModalContent>
           <ModalCloseButton/>
@@ -42,7 +42,7 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
                 alt={'GYMLABO Image'}
                 src={'/gymlab.jpg'}
                 fit={'cover'}
-                w={'92%'}
+                w={'90%'}
                 h={'250px'}
                 align={'center'}
               />
@@ -89,12 +89,12 @@ const PosterModal: FC<PosterModalProps> = ({ isOpen, onClose }) => (
             </Container>
           </ModalBody>
           <Stack align={'center'}>
-            <ModalFooter my={'8px'}>
+            <ModalFooter my={'16px'}>
               <Button
                 rounded={'md'}
                 w={'100%'}
-                px={'10'}
-                py={'2'}
+                px={'100px'}
+                py={'2px'}
                 size={'lg'}
                 bg={useColorModeValue('gray.900', 'gray.50')}
                 color={useColorModeValue('white', 'gray.900')}
