@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import LogInForm from '@/containers/LogInForm'
+import LogInForm from '@/features/Form/LogInForm'
 
 const LogIn: NextPage = () => (
   <>
