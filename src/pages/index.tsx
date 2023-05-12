@@ -1,15 +1,14 @@
 import { NextPage } from 'next'
-import path from '@/configs/model.json'
-import Poster from '@/containers/Poster'
-import Header from '@/containers/Header'
-import DrawCanvas from '@/containers/DrawCanvas'
+import Poster from '@/features/Poster/Poster'
+import Header from '@/components/Header'
+import DrawCanvas from '@/features/Canvas/DrawCanvas'
 
 const IndexPage: NextPage = () => (
   <>
     <Header />
     <DrawCanvas>
       <Poster
-        modelPath={path.model_path}
+        modelPath={'/kyutech_map.glb'}
       />
     </DrawCanvas>
   </>
