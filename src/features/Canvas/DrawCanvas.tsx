@@ -2,6 +2,7 @@ import { FC, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Preload, useProgress } from '@react-three/drei'
 import Loader from '@/components/Loader'
+import Player from '@/features/Canvas/Player'
 
 const DrawCanvas: FC = ({ children }) => {
   const { progress } = useProgress()
@@ -38,6 +39,7 @@ const DrawCanvas: FC = ({ children }) => {
           {children}
         </Suspense>
         <Preload all />
+        <Player />
       </Canvas> 
     </>
   )

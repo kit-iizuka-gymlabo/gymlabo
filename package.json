@@ -16,13 +16,16 @@
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@react-three/drei": "^9.2.0",
-    "@react-three/fiber": "^8.0.10",
+    "@react-three/fiber": "^8.13.0",
+    "@recast-navigation/core": "^0.0.7",
+    "@recast-navigation/three": "^0.0.7",
     "firebase-admin": "^10.2.0",
     "framer-motion": "^6",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-hook-form": "^7.31.1",
+    "recast-navigation": "^0.0.7",
     "three": "^0.139.2"
   },
   "devDependencies": {

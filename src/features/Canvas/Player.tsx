@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react'
-import { OrbitControls, Sky, Preload, useProgress } from '@react-three/drei'
-import { Group } from 'three'
+import { useState, useEffect } from 'react';
+import { useFrame, ThreeEvent } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
+import { NavMesh, NavMeshQuery, TileCache, Crowd } from 'recast-navigation';
+import { Group, Mesh } from 'three';
+import { threeToNavMesh } from 'recast-navigation/three';
 
 const Player = () => {
   const [group, setGroup] = useState<Group | null>(null);
   const [navMesh, setNavMesh] = useState<NavMesh | undefined>();
   const [navMeshQuery, setNavMeshQuery] = useState<NavMeshQuery | undefined>();
+  const [tileCache, setTileCache] = useState<TileCache | undefined>();
   const [crowd, setCrowd] = useState<Crowd | undefined>();
-  const [agentTarget, setAgentTarget] = useState<Vector3 | undefined>();
-  const [agentPathMesh, setAgentPathMesh] = useState<Mesh | undefined>();
   useEffect(() => {
     if (!group) return;
     const meshes: Mesh[] = [];
@@ -18,14 +20,32 @@ const Player = () => {
       }
     });
     const {
-      navMesh
+      navMesh,
+      tileCache
     } = threeToNavMesh(meshes, {
-      cs: 0.15,
-      ch: 0.2,
-      walkableRadius: 0.6,
-      walkableClimb: 2.1,
-      walkableSlopeAngle: 45
+      ch: 0.05,
+      cs: 0.1,
+      tileSize: 32
     });
+    tileCache.addBoxObstacle({
+      x: -2,
+      y: 1,
+      z: 1
+    }, {
+      x: 1,
+      y: 1,
+      z: 1
+    }, 0.2);
+    tileCache.addCylinderObstacle({
+      x: 1.5,
+      y: 0,
+      z: -1.5
+    }, 1, 0.5);
+    let upToDate = false;
+    while (!upToDate) {
+      const result = tileCache.update(navMesh);
+      upToDate = result.upToDate;
+    }
     const navMeshQuery = new NavMeshQuery({
       navMesh
     });
@@ -35,80 +55,52 @@ const Player = () => {
       maxAgentRadius: 0.2
     });
     crowd.addAgent(navMeshQuery.getClosestPoint({
-      x: -2.9,
-      y: 2.366,
-      z: 0.9
+      x: 0,
+      y: 0,
+      z: 0
     }), {
-      radius: 0.1,
-      height: 0.5,
+      radius: 0.2,
+      height: 1,
       maxAcceleration: 4.0,
       maxSpeed: 1.0,
       collisionQueryRange: 0.5,
-      pathOptimizationRange: 0.0
+      pathOptimizationRange: 0.0,
+      separationWeight: 1.0
     });
     setNavMesh(navMesh);
     setNavMeshQuery(navMeshQuery);
+    setTileCache(tileCache);
     setCrowd(crowd);
     return () => {
       setNavMesh(undefined);
       setNavMeshQuery(undefined);
+      setTileCache(undefined);
       setCrowd(undefined);
+      crowd.destroy();
+      navMesh.destroy();
     };
   }, [group]);
   useFrame((_, delta) => {
     if (!crowd) return;
     crowd.update(delta);
   });
-  useEffect(() => {
-    if (!crowd) return;
-    const interval = setInterval(() => {
-      if (!crowd) return;
-      if (!agentTarget) {
-        setAgentPathMesh(undefined);
-        return;
-      }
-      const path = [crowd.getAgentPosition(0), ...crowd.getAgentCorners(0)];
-      if (path.length) {
-        setAgentPathMesh(createLineMesh(path));
-      } else {
-        setAgentPathMesh(undefined);
-      }
-    }, 200);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [crowd, agentTarget]);
   const onClick = (e: ThreeEvent<MouseEvent>) => {
     if (!navMesh || !navMeshQuery || !crowd) return;
-    e.stopPropagation();
     const target = navMeshQuery.getClosestPoint(e.point);
-    if (e.button === 2) {
-      crowd.teleport(0, target);
-      setAgentTarget(undefined);
-    } else {
-      crowd.goto(0, target);
-      setAgentTarget(new Vector3().copy((target as Vector3)));
-    }
+    crowd.goto(0, target);
   };
   return <>
-      {agentPathMesh && <group position={[0, 0.2, 0]}>
-          <primitive object={agentPathMesh} />
-        </group>}
-
-      {agentTarget && <group position={[0, 0, 0]}>
-          <mesh position={agentTarget}>
-            <sphereGeometry args={[0.1, 16, 16]} />
-            <meshBasicMaterial color="blue" />
-          </mesh>
-        </group>}
-
-      <group onPointerDown={onClick}>
+      <group onClick={onClick}>
         <group ref={setGroup}>
-          <NavTestEnvirionment />
+          <mesh rotation-x={-Math.PI / 2}>
+            <planeGeometry args={[10, 10]} />
+            <meshStandardMaterial color="#ccc" />
+          </mesh>
         </group>
-        <Debug navMesh={navMesh} crowd={crowd} agentMaterial={agentMaterial} />
       </group>
 
-      <OrbitControls makeDefault />
+      <OrbitControls />
     </>;
 }
+
+export default Player
