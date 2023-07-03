@@ -1,6 +1,7 @@
 import { FC, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Preload, useProgress } from '@react-three/drei'
+import { Physics } from '@react-three/rapier'
 import Loader from '@/components/Loader'
 
 const DrawCanvas: FC = ({ children }) => {
@@ -15,16 +16,8 @@ const DrawCanvas: FC = ({ children }) => {
           width: '100vw',
           height: '100vh'
         }}
-        camera={{ position: [0,20,0] }}
       >
         <Sky />
-        <OrbitControls
-          enablePan={false}
-          enableZoom={true}
-          enableRotate={true}
-          minPolarAngle={Math.PI/3}
-          maxPolarAngle={Math.PI/2}
-        />
         <ambientLight intensity={0.5}/>
         <directionalLight
           position={[10,20,0]}
@@ -35,10 +28,12 @@ const DrawCanvas: FC = ({ children }) => {
         />
         <gridHelper />
         <Suspense fallback={<Loader progress={progress}/>}>
+          <Physics>
           {children}
+          </Physics>
         </Suspense>
         <Preload all />
-      </Canvas> 
+      </Canvas>
     </>
   )
 }
