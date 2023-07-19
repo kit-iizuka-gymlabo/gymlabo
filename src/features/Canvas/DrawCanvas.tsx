@@ -1,40 +1,33 @@
 import { FC, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Sky, Preload, useProgress } from '@react-three/drei'
-import Loader from '@/components/Loader'
+import { Sky, Preload, useProgress } from '@react-three/drei'
 
-const DrawCanvas: FC = ({ children }) => {
+const DrawCanvas: FC = ({ children, debug }: any) => {
   const { progress } = useProgress()
 
   return (
     <>
       <Canvas
         style={{
+          backgroundColor: "#C9DBB2",
           position: 'absolute',
           top: 0,
           width: '100vw',
-          height: '100vh'
+          height: '100vh',
+          zIndex: -1
         }}
-        camera={{ position: [0,20,0] }}
+        camera={{ position: [-3,3,3],  }}
+        
       >
-        <Sky />
-        <OrbitControls
-          enablePan={false}
-          enableZoom={true}
-          enableRotate={true}
-          minPolarAngle={Math.PI/3}
-          maxPolarAngle={Math.PI/2}
-        />
         <ambientLight intensity={0.5}/>
         <directionalLight
-          position={[10,20,0]}
+          position={[-10,20,0]}
           intensity={1}
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
           castShadow
         />
-        <gridHelper />
-        <Suspense fallback={<Loader progress={progress}/>}>
+        <Suspense fallback={null}>
           {children}
         </Suspense>
         <Preload all />

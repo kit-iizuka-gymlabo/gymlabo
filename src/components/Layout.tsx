@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import { FC  } from 'react'
 import Meta from '@/components/Meta'
 
-const Layout: FC = ({ children }) => (
+const Layout: FC = ({ children }: any) => (
   <> 
     <Meta 
       title='GYMLABO'
