@@ -1,7 +1,7 @@
 import { FC  } from 'react'
 import Meta from '@/components/Meta'
 
-const Layout: FC = ({ children }: any) => (
+const Layout: FC = (props: any) => (
   <> 
     <Meta 
       title='GYMLABO'
@@ -11,7 +11,6 @@ const Layout: FC = ({ children }: any) => (
       favicon='/favicon.ico'
       thumbnail='/test.png'
     />
-    {children}
   </>
 )
 

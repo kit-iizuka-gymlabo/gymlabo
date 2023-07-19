@@ -7,22 +7,25 @@ import path from "@/config/camera.json"
 
 export function CameraManager({cameraRef, target, setTarget}:any) {
   let timer = 0.0;
+  
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  /*
   const [datas, set] = useControls(() => ({
     position: [0, 0, 0],
     target: [0, 0, 0],
     rotate: 0,
     button: button((get) => setAutoRotate((_autoRotate) => !_autoRotate))
   }))
-
+  */
   useFrame(({camera}, delta, xrFrame) => {
-    // debug
+    // debug 
+    /*
     set({
       position:  [camera.position.x, camera.position.y, camera.position.z],
       target:    [cameraRef.current._target.x, cameraRef.current._target.y, cameraRef.current._target.z],
       rotate:    cameraRef.current.azimuthAngle % (2 * Math.PI)
     });
-    
+    */
     var index = path.camera_path.findIndex(({triggerAngle}: any) => Math.abs(triggerAngle - cameraRef.current.azimuthAngle) < 0.01);
 
     // トリガーとなる角度に達した
