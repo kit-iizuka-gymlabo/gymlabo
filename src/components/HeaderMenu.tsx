@@ -231,7 +231,7 @@ export default function HeaderMenu({setTarget}: any) {
             <a href="#" className={classes.link}>
               <Text color="dimmed">予約状況</Text>
             </a>
-            <a href="#" className={classes.link}>
+            <a href="https://www.gymlabo.kyutech.jp/blog/" className={classes.link}>
               <Text color="dark">公式ブログ</Text>
             </a>
             <a href="#" className={classes.link}>

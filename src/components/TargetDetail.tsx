@@ -37,6 +37,7 @@ export default function TargetDetail({target}: any) {
               {path.camera_path[target].name}
             </Text>
             <Text 
+              bg="rgba(255,255,255,0.4)"
               mt="lg"
               color="black"
               size="md"

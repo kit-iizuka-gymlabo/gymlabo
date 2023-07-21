@@ -43,9 +43,9 @@ export function CameraManager({cameraRef, target, setTarget}:any) {
       ); 
       
       // 指定時間超えたら
-      if(timer > 2) { 
+      if(timer > 3) { 
         setTarget(-1);              // 注目点解除
-        cameraRef.current?.reset(true);   // カメラをもとの位置に戻す
+        // cameraRef.current?.reset(true);   // カメラをもとの位置に戻す
 
         timer = 0.0;                // タイマー初期化
       } 
