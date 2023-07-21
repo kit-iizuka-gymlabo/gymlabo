@@ -33,6 +33,20 @@ export default function Content() {
 
 
       <PresentationCharacter position={[2.05, 0.303, 0.25]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_presentation1.glb'} />
+      <StudyCharacter position={[1.87, 0.305, 0.23]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_study1.glb'} />
+      <StudyCharacter position={[1.87, 0.303, 0.31]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_study1.glb'} />
+      <StudyCharacter position={[1.69, 0.303, -0.1]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_study1.glb'} />
+      
+      <LaptopCharacter position={[1.69, 0.312, 0.23]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+      <LaptopCharacter position={[1.69, 0.312, 0.31]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+      <LaptopCharacter position={[1.87, 0.312, 0.16]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+      
+      <LaptopCharacter position={[1.69, 0.312, -0.18]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+      <LaptopCharacter position={[1.87, 0.312, -0.1]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+      <LaptopCharacter position={[1.69, 0.312, -0.03]} rotation-y={Math.PI/2} scale={[0.023, 0.023, 0.023]} path={'/character/character_laptop1.glb'} />
+
+
+
     </group>
   )
 }
